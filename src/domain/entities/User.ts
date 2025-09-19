@@ -3,13 +3,15 @@ import { GeoCoordinates } from '../value-objects/GeoCoordinates';
 import { Name } from '../value-objects/Name';
 import { Password } from '../value-objects/Password';
 
+export type UserRole = "cidadão" | "agente";
+
 export class User {
   private constructor(
     readonly id: string,
     readonly name: Name,
     readonly email: Email,
     readonly password: Password,
-    readonly location: GeoCoordinates
+    readonly role: UserRole
   ) {}
 
   static create(
@@ -17,8 +19,9 @@ export class User {
     name: Name,
     email: Email,
     password: Password,
-    location: GeoCoordinates
+    role: UserRole
   ): User {
-    return new User(id, name, email, password, location);
+    return new User(id, name, email, password, role);
   }
 }
+

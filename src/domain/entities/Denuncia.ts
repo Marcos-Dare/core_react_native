@@ -1,4 +1,5 @@
 import { GeoCoordinates } from "../value-objects/GeoCoordinates";
+import { Photo } from "../value-objects/Photo";
 
 export type StatusDenuncia = "pendente" | "em_analise" | "resolvida" | "rejeitada";
 
@@ -6,7 +7,7 @@ export class Denuncia {
   private constructor(
     readonly id: string,
     readonly userId: string,
-    readonly foto: string,
+    readonly foto: Photo,
     readonly descricao: string | null,
     readonly localizacao: GeoCoordinates,
     readonly status: StatusDenuncia,
@@ -16,7 +17,7 @@ export class Denuncia {
   static create(
     id: string,
     userId: string,
-    foto: string,
+    foto: Photo,
     localizacao: GeoCoordinates,
     descricao?: string
   ): Denuncia {

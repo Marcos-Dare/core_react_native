@@ -1,5 +1,5 @@
 import { Loan } from '../entities/Loan';
-import { ILoanRepository } from '../repositories/ILoanRepository';
+import { ILoanRepository } from '../repositories/IDenuncia';
 
 export class ReturnVinylRecord {
   constructor(private readonly loanRepository: ILoanRepository) {}

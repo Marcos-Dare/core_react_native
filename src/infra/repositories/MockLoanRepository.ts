@@ -1,4 +1,4 @@
-import { ILoanRepository } from '../../domain/repositories/ILoanRepository';
+import { ILoanRepository } from '../../domain/repositories/IDenuncia';
 import { Loan } from '../../domain/entities/Loan';
 
 export class MockLoanRepository implements ILoanRepository {

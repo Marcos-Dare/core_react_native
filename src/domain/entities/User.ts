@@ -1,6 +1,6 @@
 import { Email } from '../value-objects/Email';
 import { GeoCoordinates } from '../value-objects/GeoCoordinates';
-import { Name } from '../value-objects/Name';
+import { Name } from '../value-objects/Descricao';
 import { Password } from '../value-objects/Password';
 
 export type UserRole = "cidadão" | "agente";

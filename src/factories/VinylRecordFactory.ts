@@ -1,5 +1,5 @@
 import { VinylRecord } from '../domain/entities/VinylRecord';
-import { Name } from '../domain/value-objects/Name';
+import { Name } from '../domain/value-objects/Descricao';
 import { Photo } from '../domain/value-objects/Photo';
 
 export class VinylRecordFactory {

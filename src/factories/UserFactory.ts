@@ -1,7 +1,7 @@
 import { User } from '../domain/entities/User';
 import { Email } from '../domain/value-objects/Email';
 import { GeoCoordinates } from '../domain/value-objects/GeoCoordinates';
-import { Name } from '../domain/value-objects/Name';
+import { Name } from '../domain/value-objects/Descricao';
 import { Password } from '../domain/value-objects/Password';
 
 export class UserFactory {

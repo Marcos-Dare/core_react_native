@@ -1,6 +1,6 @@
 import { User } from '../entities/User';
 import { IUserRepository } from '../repositories/IUserRepository';
-import { Name } from '../value-objects/Name';
+import { Name } from '../value-objects/Descricao';
 import { Email } from '../value-objects/Email';
 import { Password } from '../value-objects/Password';
 import { GeoCoordinates } from '../value-objects/GeoCoordinates';

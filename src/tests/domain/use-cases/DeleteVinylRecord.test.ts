@@ -1,5 +1,5 @@
 import { DeleteVinylRecord } from '../../../domain/use-cases/DeleteVinylRecord';
-import { RegisterVinylRecord } from '../../../domain/use-cases/RegisterVinylRecord';
+import { RegisterVinylRecord } from '../../../domain/use-cases/RegisterDenuncia';
 import { MockVinylRecordRepository } from '../../../infra/repositories/MockVinylRecordRepository';
 
 describe('DeleteVinylRecord', () => {

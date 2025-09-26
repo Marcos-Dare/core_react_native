@@ -1,5 +1,5 @@
-import { FindVinylRecord } from '../../../domain/use-cases/FindVinylRecord';
-import { RegisterVinylRecord } from '../../../domain/use-cases/RegisterVinylRecord';
+import { FindVinylRecord } from '../../../domain/use-cases/FindDenuncia';
+import { RegisterVinylRecord } from '../../../domain/use-cases/RegisterDenuncia';
 import { MockVinylRecordRepository } from '../../../infra/repositories/MockVinylRecordRepository';
 
 describe('FindVinylRecord', () => {

@@ -19,8 +19,11 @@ export class Denuncia {
     userId: string,
     foto: Photo,
     localizacao: GeoCoordinates,
-    descricao?: string
+    status: StatusDenuncia,
+    dataHora: Date,
+    descricao?: string,
+
   ): Denuncia {
-    return new Denuncia(id, userId, foto, descricao ?? null, localizacao, "pendente", new Date());
+    return new Denuncia(id, userId, foto, descricao ?? null, localizacao, status, dataHora);
   }
 }

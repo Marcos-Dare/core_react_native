@@ -1,5 +1,5 @@
-import { UpdateVinylRecord } from '../../../domain/use-cases/UpdateVinylRecord';
-import { RegisterVinylRecord } from '../../../domain/use-cases/RegisterVinylRecord';
+import { UpdateVinylRecord } from '../../../domain/use-cases/UpdateDenuncia';
+import { RegisterVinylRecord } from '../../../domain/use-cases/RegisterDenuncia';
 import { MockVinylRecordRepository } from '../../../infra/repositories/MockVinylRecordRepository';
 
 describe('UpdateVinylRecord', () => {

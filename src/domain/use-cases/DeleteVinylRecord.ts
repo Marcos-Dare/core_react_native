@@ -1,17 +1,17 @@
-import { IVinylRecordRepository } from '../repositories/IVinylRecordRepository';
+import { IDenunciaRepository } from '../repositories/IDenuncia';
 
 export class DeleteVinylRecord {
-  constructor(private readonly vinylRecordRepository: IVinylRecordRepository) {}
+  constructor(private readonly denunciaRepository: IDenunciaRepository) {}
 
   async execute(params: { id: string }): Promise<void> {
     const { id } = params;
 
-    const record = await this.vinylRecordRepository.findById(id);
+    const record = await this.denunciaRepository.findById(id);
 
     if (!record) {
-      throw new Error('Vinyl record not found');
+      throw new Error('Denuncia record not found');
     }
 
-    await this.vinylRecordRepository.delete(id);
+    await this.denunciaRepository.delete(id);
   }
 }

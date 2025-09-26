@@ -1,6 +1,6 @@
 import { MockUserRepository } from '../../../infra/repositories/MockUserRepository';
 import { User } from '../../../domain/entities/User';
-import { Name } from '../../../domain/value-objects/Name';
+import { Name } from '../../../domain/value-objects/Descricao';
 import { Email } from '../../../domain/value-objects/Email';
 import { Password } from '../../../domain/value-objects/Password';
 import { GeoCoordinates } from '../../../domain/value-objects/GeoCoordinates';

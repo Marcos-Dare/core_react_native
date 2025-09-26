@@ -1,4 +1,4 @@
-import { Name } from '../../../domain/value-objects/Name';
+import { Name } from '../../../domain/value-objects/Descricao';
 
 describe('Name', () => {
   it('should create a valid name', () => {

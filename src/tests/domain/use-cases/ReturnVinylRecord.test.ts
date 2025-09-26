@@ -1,7 +1,7 @@
 import { ReturnVinylRecord } from '../../../domain/use-cases/ReturnVinylRecord';
 import { BorrowVinylRecord } from '../../../domain/use-cases/BorrowVinylRecord';
 import { RegisterUser } from '../../../domain/use-cases/RegisterUser';
-import { RegisterVinylRecord } from '../../../domain/use-cases/RegisterVinylRecord';
+import { RegisterVinylRecord } from '../../../domain/use-cases/RegisterDenuncia';
 import { MockLoanRepository } from '../../../infra/repositories/MockLoanRepository';
 import { MockUserRepository } from '../../../infra/repositories/MockUserRepository';
 import { MockVinylRecordRepository } from '../../../infra/repositories/MockVinylRecordRepository';

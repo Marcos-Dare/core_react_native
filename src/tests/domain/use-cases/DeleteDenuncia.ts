@@ -1,4 +1,4 @@
-import { DeleteVinylRecord } from '../../../domain/use-cases/DeleteVinylRecord';
+import { DeleteVinylRecord } from '../../../domain/use-cases/DeleteDenuncia';
 import { RegisterVinylRecord } from '../../../domain/use-cases/RegisterDenuncia';
 import { MockVinylRecordRepository } from '../../../infra/repositories/MockVinylRecordRepository';
 

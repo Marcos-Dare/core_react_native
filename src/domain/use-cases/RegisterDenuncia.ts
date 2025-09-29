@@ -5,7 +5,7 @@ import { Photo } from '../value-objects/Photo';
 import { GeoCoordinates } from '../value-objects/GeoCoordinates';
 import { StatusDenuncia } from '../entities/Denuncia' 
 
-export class RegisterVinylRecord {
+export class RegisterDenuncia {
   constructor(private readonly denunciaRepository: IDenunciaRepository) {}
 
   async execute(params: {

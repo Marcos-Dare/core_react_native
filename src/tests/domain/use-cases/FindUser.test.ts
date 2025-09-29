@@ -1,10 +1,10 @@
 import { FindUser } from '../../../domain/use-cases/FindUser';
 import { RegisterUser } from '../../../domain/use-cases/RegisterUser';
-import { MockUserRepository } from '../../../infra/repositories/MockUserRepository';
+import { MockDenunciaRepository } from '../../../infra/repositories/MockUserRepository';
 
 describe('FindUser', () => {
   it('should find a user by id', async () => {
-    const userRepository = new MockUserRepository();
+    const userRepository = new MockDenunciaRepository();
     const registerUser = new RegisterUser(userRepository);
     const findUser = new FindUser(userRepository);
 
@@ -12,8 +12,7 @@ describe('FindUser', () => {
       name: 'John Doe',
       email: 'john.doe@example.com',
       password: 'password123',
-      latitude: 40.7128,
-      longitude: -74.0060,
+      role: 'agente'
     });
 
     const foundUser = await findUser.execute({ id: user.id });
@@ -22,7 +21,7 @@ describe('FindUser', () => {
   });
 
   it('should return null if the user is not found', async () => {
-    const userRepository = new MockUserRepository();
+    const userRepository = new MockDenunciaRepository();
     const findUser = new FindUser(userRepository);
 
     const foundUser = await findUser.execute({ id: '1' });

@@ -1,7 +1,7 @@
 import { IUserRepository } from '../../domain/repositories/IUserRepository';
 import { User } from '../../domain/entities/User';
 
-export class MockUserRepository implements IUserRepository {
+export class MockDenunciaRepository implements IUserRepository {
   private users: User[] = [];
 
   async save(user: User): Promise<void> {

@@ -1,19 +1,21 @@
-import { UpdateVinylRecord } from '../../../domain/use-cases/UpdateDenuncia';
-import { RegisterVinylRecord } from '../../../domain/use-cases/RegisterDenuncia';
-import { MockVinylRecordRepository } from '../../../infra/repositories/MockVinylRecordRepository';
+import { UpdateDenuncia } from '../../../domain/use-cases/UpdateDenuncia';
+import { RegisterDenuncia } from '../../../domain/use-cases/RegisterDenuncia';
+import { MockDenunciaRepository } from '../../../infra/repositories/MockDenunciaRepository';
+import { Photo } from '../../../domain/value-objects/Photo';
 
+
+let data = new Date()
 describe('UpdateVinylRecord', () => {
   it('should update a vinyl record', async () => {
-    const vinylRecordRepository = new MockVinylRecordRepository();
-    const registerVinylRecord = new RegisterVinylRecord(vinylRecordRepository);
-    const updateVinylRecord = new UpdateVinylRecord(vinylRecordRepository);
+    const denunciaRepository = new MockDenunciaRepository();
+    const registerDenuncia = new RegisterDenuncia(denunciaRepository);
+    const updateVinylRecord = new UpdateDenuncia(denunciaRepository);
 
-    const record = await registerVinylRecord.execute({
-      band: 'The Beatles',
-      album: 'Abbey Road',
-      year: 1969,
-      numberOfTracks: 17,
-      photoUrl: 'https://example.com/abbey-road.jpg',
+    const denuncia = await registerDenuncia.execute({
+      userId: "1",
+      descricao: "denuncia feita",
+      status: "pendente",
+      dataHora: data,
     });
 
     const updatedRecord = await updateVinylRecord.execute({

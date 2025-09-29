@@ -3,7 +3,7 @@ import { IUserRepository } from '../repositories/IUserRepository';
 import { Name } from '../value-objects/Descricao';
 import { Email } from '../value-objects/Email';
 import { Password } from '../value-objects/Password';
-import { GeoCoordinates } from '../value-objects/GeoCoordinates';
+import { UserRole } from '../entities/User';
 
 export class RegisterUser {
   constructor(private readonly userRepository: IUserRepository) {}
@@ -12,10 +12,9 @@ export class RegisterUser {
     name: string;
     email: string;
     password: string;
-    latitude: number;
-    longitude: number;
+    role: UserRole
   }): Promise<User> {
-    const { name, email, password, latitude, longitude } = params;
+    const { name, email, password, role } = params;
 
     const userExists = await this.userRepository.findByEmail(email);
 
@@ -30,7 +29,7 @@ export class RegisterUser {
       Name.create(name),
       Email.create(email),
       Password.create(hashedPassword),
-      GeoCoordinates.create(latitude, longitude)
+      role
     );
 
     await this.userRepository.save(user);

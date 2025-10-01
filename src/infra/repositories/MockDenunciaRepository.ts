@@ -2,36 +2,43 @@ import { IDenunciaRepository } from '../../domain/repositories/IDenuncia';
 import { Denuncia, StatusDenuncia } from '../../domain/entities/Denuncia';
 
 export class MockDenunciaRepository implements IDenunciaRepository {
-  private denuncia: Denuncia[] = [];
+
+  public denuncias: Denuncia[] = [];
 
   async save(denuncia: Denuncia): Promise<void> {
-    this.denuncia.push(denuncia);
+    this.denuncias.push(denuncia);
   }
 
   async findById(id: string): Promise<Denuncia | null> {
-    return this.denuncia.find(denuncia => denuncia.id === id) || null;
+    const found = this.denuncias.find(d => d.id === id);
+    return found || null;
   }
 
   async findByUserId(userId: string): Promise<Denuncia[]> {
-    return new Promise(() => {});
+
+    const found = this.denuncias.filter(d => d.userId === userId);
+    return found;
   }
 
   async findByStatus(status: StatusDenuncia): Promise<Denuncia[]> {
-    return new Promise(() => {});
-  }
 
-  async findAll(): Promise<Denuncia[]> {
-    return this.denuncia;
+    const found = this.denuncias.filter(d => d.status === status);
+    return found;
   }
 
   async update(denuncia: Denuncia): Promise<void> {
-    const denunciaIndex = this.denuncia.findIndex(r => r.id === denuncia.id);
+    const denunciaIndex = this.denuncias.findIndex(d => d.id === denuncia.id);
     if (denunciaIndex !== -1) {
-      this.denuncia[denunciaIndex] = denuncia;
+      this.denuncias[denunciaIndex] = denuncia;
     }
+
   }
 
   async delete(id: string): Promise<void> {
-    this.denuncia = this.denuncia.filter(denuncia => denuncia.id !== id);
+    this.denuncias = this.denuncias.filter(d => d.id !== id);
+  }
+
+  async findAll(): Promise<Denuncia[]> {
+    return this.denuncias;
   }
 }

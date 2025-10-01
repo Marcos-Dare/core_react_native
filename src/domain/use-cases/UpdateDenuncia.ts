@@ -1,45 +1,53 @@
 import { Denuncia } from '../entities/Denuncia';
 import { IDenunciaRepository } from '../repositories/IDenuncia';
-import { Name } from '../value-objects/Descricao';
-import { Photo } from '../value-objects/Photo';
 import { GeoCoordinates } from '../value-objects/GeoCoordinates';
-import { StatusDenuncia } from '../entities/Denuncia' 
+import { StatusDenuncia } from '../entities/Denuncia';
 
 export class UpdateDenuncia {
   constructor(private readonly denunciaRepository: IDenunciaRepository) {}
 
   async execute(params: {
-    id:string,
-    userId: string;
-    foto: Photo;
+    id: string;
     descricao?: string;
-    localizacao: GeoCoordinates;
-    status: StatusDenuncia;
-    dataHora: Date
+    localizacao?: GeoCoordinates;
+    status?: StatusDenuncia;
   }): Promise<Denuncia> {
-    const { id, userId, foto, descricao, localizacao, status, dataHora } = params;
+    const { id, descricao, localizacao, status } = params;
 
-    const denuncia = await this.denunciaRepository.findById(id);
+    const denunciaExistente = await this.denunciaRepository.findById(id);
 
-    if (!denuncia) {
-      throw new Error('Denuncia not found');
+    if (!denunciaExistente) {
+      throw new Error('Denúncia não encontrada');
     }
 
-    const newDescricao = descricao ? Name.create(descricao) : denuncia.descricao;
-    const newDataHora = dataHora ? dataHora : denuncia.dataHora;
-    const newPhoto = foto ? foto : denuncia.foto;
+    let denunciaAtualizada = denunciaExistente;
 
-    const updatedDenuncia = Denuncia.create(
-      denuncia.id,
-      denuncia.userId,
-      newPhoto,
-      denuncia.localizacao,
-      denuncia.status,
-      newDataHora,
-    );
 
-    await this.denunciaRepository.update(updatedDenuncia);
+    if (descricao !== undefined) {
+      denunciaAtualizada = denunciaAtualizada.updateDescricao(descricao);
+    }
+    if (localizacao) {
+      denunciaAtualizada = denunciaAtualizada.updateLocalizacao(localizacao);
+    }
 
-    return updatedDenuncia;
+    if (status) {
+      switch (status) {
+        case 'em_analise':
+          denunciaAtualizada = denunciaAtualizada.iniciarAnalise();
+          break;
+        case 'resolvida':
+          denunciaAtualizada = denunciaAtualizada.resolver();
+          break;
+        case 'rejeitada':
+          denunciaAtualizada = denunciaAtualizada.rejeitar();
+          break;
+        case 'pendente':
+          break;
+      }
+    }
+
+    await this.denunciaRepository.update(denunciaAtualizada);
+
+    return denunciaAtualizada;
   }
 }

@@ -1,6 +1,6 @@
 import { MockVinylRecordRepository } from '../../../infra/repositories/MockVinylRecordRepository';
 import { VinylRecord } from '../../../domain/entities/VinylRecord';
-import { Name } from '../../../domain/value-objects/Descricao';
+import { Name } from '../../../domain/value-objects/Name';
 import { Photo } from '../../../domain/value-objects/Photo';
 
 describe('MockVinylRecordRepository', () => {

@@ -1,6 +1,6 @@
 import { IDenunciaRepository } from '../repositories/IDenuncia';
 
-export class DeleteVinylRecord {
+export class DeleteDenuncia {
   constructor(private readonly denunciaRepository: IDenunciaRepository) {}
 
   async execute(params: { id: string }): Promise<void> {
@@ -9,7 +9,7 @@ export class DeleteVinylRecord {
     const record = await this.denunciaRepository.findById(id);
 
     if (!record) {
-      throw new Error('Denuncia record not found');
+      throw new Error('Denúncia não encontrada');
     }
 
     await this.denunciaRepository.delete(id);

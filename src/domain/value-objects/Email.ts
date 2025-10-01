@@ -3,13 +3,14 @@ export class Email {
 
   static create(email: string): Email {
     if (!this.validate(email)) {
-      throw new Error('Invalid email');
+      throw new Error('Email inválido');
     }
     return new Email(email);
   }
 
   private static validate(email: string): boolean {
-    const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
+    // Regex corrigida (sem o "g" no final)
+    const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
     return emailRegex.test(email);
   }
 }

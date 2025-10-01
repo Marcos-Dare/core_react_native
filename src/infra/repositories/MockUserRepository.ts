@@ -1,14 +1,16 @@
 import { IUserRepository } from '../../domain/repositories/IUserRepository';
 import { User } from '../../domain/entities/User';
 
-export class MockDenunciaRepository implements IUserRepository {
-  private users: User[] = [];
+
+export class MockUserRepository implements IUserRepository {
+  public users: User[] = [];
 
   async save(user: User): Promise<void> {
     this.users.push(user);
   }
 
   async findByEmail(email: string): Promise<User | null> {
+    // A lógica para acessar o valor do Value Object está correta
     return this.users.find(user => user.email.value === email) || null;
   }
 

@@ -1,9 +1,9 @@
-import { User } from '../entities/User';
+import { randomUUID } from 'crypto';
+import { User, UserRole } from '../entities/User';
 import { IUserRepository } from '../repositories/IUserRepository';
-import { Name } from '../value-objects/Descricao';
+import { Name } from '../value-objects/Name';
 import { Email } from '../value-objects/Email';
 import { Password } from '../value-objects/Password';
-import { UserRole } from '../entities/User';
 
 export class RegisterUser {
   constructor(private readonly userRepository: IUserRepository) {}
@@ -12,25 +12,28 @@ export class RegisterUser {
     name: string;
     email: string;
     password: string;
-    role: UserRole
+    role: UserRole;
   }): Promise<User> {
     const { name, email, password, role } = params;
 
     const userExists = await this.userRepository.findByEmail(email);
 
     if (userExists) {
-      throw new Error('User already exists');
+      throw new Error('Usuário já existe');
     }
 
     const hashedPassword = await this.hashPassword(password);
 
-    const user = User.create(
-      Math.random().toString(),
-      Name.create(name),
-      Email.create(email),
-      Password.create(hashedPassword),
-      role
-    );
+    // --- MUDANÇA AQUI ---
+    // Agora passamos um objeto para o método create
+    const user = User.create({
+      id: randomUUID(),
+      name: Name.create(name),
+      email: Email.create(email),
+      password: Password.create(hashedPassword),
+      role: role,
+    });
+    // --- FIM DA MUDANÇA ---
 
     await this.userRepository.save(user);
 
@@ -38,6 +41,7 @@ export class RegisterUser {
   }
 
   private async hashPassword(password: string): Promise<string> {
+    // Implementação temporária para o hash
     return `hashed_${password}`;
   }
 }

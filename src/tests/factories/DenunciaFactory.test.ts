@@ -1,4 +1,4 @@
-import { VinylRecordFactory } from '../../factories/VinylRecordFactory';
+import { VinylRecordFactory } from '../../factories/DenunciaFactory';
 
 describe('VinylRecordFactory', () => {
   it('should create a vinyl record with default values', () => {

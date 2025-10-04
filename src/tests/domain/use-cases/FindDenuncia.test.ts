@@ -1,32 +1,28 @@
-import { FindVinylRecord } from '../../../domain/use-cases/FindDenuncia';
-import { RegisterVinylRecord } from '../../../domain/use-cases/RegisterDenuncia';
-import { MockVinylRecordRepository } from '../../../infra/repositories/MockVinylRecordRepository';
+import { MockDenunciaRepository } from "../../../infra/repositories/MockDenunciaRepository";
+import { FindDenuncia } from "../../../domain/use-cases/FindDenuncia";
+import { RegisterDenuncia } from "../../../domain/use-cases/RegisterDenuncia";
+import { Photo } from "../../../domain/value-objects/Photo";
+import { GeoCoordinates } from "../../../domain/value-objects/GeoCoordinates";
+import { Denuncia } from "../../../domain/entities/Denuncia";
 
-describe('FindVinylRecord', () => {
-  it('should find a vinyl record by id', async () => {
-    const vinylRecordRepository = new MockVinylRecordRepository();
-    const registerVinylRecord = new RegisterVinylRecord(vinylRecordRepository);
-    const findVinylRecord = new FindVinylRecord(vinylRecordRepository);
+describe("Testar caso de uso: FindDenuncia", () => {
+    it("testar se está encocntrando a denuncia com sucesso", async () => {
+        const denunciaRepository = new MockDenunciaRepository()
+        const registerDenuncia = new RegisterDenuncia(denunciaRepository)
+        const findDenuncia = new FindDenuncia(denunciaRepository)
 
-    const record = await registerVinylRecord.execute({
-      band: 'The Beatles',
-      album: 'Abbey Road',
-      year: 1969,
-      numberOfTracks: 17,
-      photoUrl: 'https://example.com/abbey-road.jpg',
-    });
+        const denuncia = {
+            userId: "1",
+            foto: Photo.create("file:///home/marcos/Imagens/tela3.png"),
+            localizacao: GeoCoordinates.create(-43.5684, -43.4884),
+            descricao: "Testando"
+        }
 
-    const foundRecord = await findVinylRecord.execute({ id: record.id });
+        const resposta = registerDenuncia.execute(denuncia)
 
-    expect(foundRecord).toBe(record);
-  });
+        const find = await findDenuncia.execute({id: (await resposta).id})
 
-  it('should return null if the record is not found', async () => {
-    const vinylRecordRepository = new MockVinylRecordRepository();
-    const findVinylRecord = new FindVinylRecord(vinylRecordRepository);
-
-    const foundRecord = await findVinylRecord.execute({ id: '1' });
-
-    expect(foundRecord).toBeNull();
-  });
-});
+        expect(find).toBeInstanceOf(Denuncia)
+        expect(find?.descricao).toBe("Testando")
+    })
+})

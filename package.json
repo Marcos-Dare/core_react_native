@@ -13,10 +13,14 @@
   "devDependencies": {
     "@types/jest": "^30.0.0",
     "jest": "^30.2.0",
+    "metro-react-native-babel-preset": "^0.77.0",
+    "react-native": "^0.81.4",
+    "react-test-renderer": "^19.2.0",
     "ts-jest": "^29.4.4",
     "typescript": "^5.9.2"
   },
   "dependencies": {
-    "uuid": "^13.0.0"
+    "@types/uuid": "^10.0.0",
+    "uuid": "^8.3.2"
   }
 }

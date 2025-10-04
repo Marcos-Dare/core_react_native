@@ -12,8 +12,7 @@ describe('DeleteUser', () => {
       name: 'John Doe',
       email: 'john.doe@example.com',
       password: 'password123',
-      latitude: 40.7128,
-      longitude: -74.0060,
+      role: "agente"
     });
 
     await deleteUser.execute({ id: user.id });

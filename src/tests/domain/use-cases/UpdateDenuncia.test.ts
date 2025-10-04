@@ -1,64 +1,45 @@
-import { UpdateDenuncia } from '../../../domain/use-cases/UpdateDenuncia';
-import { RegisterDenuncia } from '../../../domain/use-cases/RegisterDenuncia';
-import { MockDenunciaRepository } from '../../../infra/repositories/MockDenunciaRepository';
-import { Photo } from '../../../domain/value-objects/Photo';
+import { MockDenunciaRepository } from "../../../infra/repositories/MockDenunciaRepository";
+import { UpdateDenuncia } from "../../../domain/use-cases/UpdateDenuncia";
+import { RegisterDenuncia } from "../../../domain/use-cases/RegisterDenuncia";
+import { Photo } from "../../../domain/value-objects/Photo";
+import { GeoCoordinates } from "../../../domain/value-objects/GeoCoordinates";
+import { Denuncia } from "../../../domain/entities/Denuncia";
 
+describe("testando use-case: UpdateDenuncia", ()=>{
+    it("deve atualizar uma denuncia com sucesso", async ()=>{
+        const denunciaRepository = new MockDenunciaRepository()
+        const registerDenuncia = new RegisterDenuncia(denunciaRepository)
+        const updateDenuncia = new UpdateDenuncia(denunciaRepository)
 
-let data = new Date()
-describe('UpdateVinylRecord', () => {
-  it('should update a vinyl record', async () => {
-    const denunciaRepository = new MockDenunciaRepository();
-    const registerDenuncia = new RegisterDenuncia(denunciaRepository);
-    const updateVinylRecord = new UpdateDenuncia(denunciaRepository);
+        const denuncia = await registerDenuncia.execute({
+            userId: "1",
+            foto: Photo.create("file:///home/marcos/Imagens/tela3.png"),
+            localizacao: GeoCoordinates.create(-23.1234, -43.1234),
+            descricao: "essa é 1"
+        })
 
-    const denuncia = await registerDenuncia.execute({
-      userId: "1",
-      descricao: "denuncia feita",
-      status: "pendente",
-      dataHora: data,
+        expect((await denuncia).descricao).toBe("essa é 1")
+
+        const denuncia_atualizada = await updateDenuncia.execute({
+            id: denuncia.id,
+            descricao: "essa é 2",
+            localizacao: GeoCoordinates.create(-23.1234, -43.1234),
+        })
+
+        expect(denuncia_atualizada).toBeInstanceOf(Denuncia)
+        expect((await denuncia_atualizada).descricao).toBe("essa é 2")
+    })
+
+    it("deve lançar um erro ao tentar atualizar uma denúncia que não existe", async () => {
+        const denunciaRepository = new MockDenunciaRepository();
+        const updateDenuncia = new UpdateDenuncia(denunciaRepository);
+        const idInexistente = "11";
+
+        await expect(
+            updateDenuncia.execute({
+                id: idInexistente,
+                descricao: "essa é 2",
+            })
+        ).rejects.toThrow(new Error('Denúncia não encontrada'));
     });
-
-    const updatedRecord = await updateVinylRecord.execute({
-      id: record.id,
-      album: 'The White Album',
-    });
-
-    expect(updatedRecord.album.value).toBe('The White Album');
-  });
-
-  it('should throw an error if the vinyl record is not found', async () => {
-    const vinylRecordRepository = new MockVinylRecordRepository();
-    const updateVinylRecord = new UpdateVinylRecord(vinylRecordRepository);
-
-    await expect(
-      updateVinylRecord.execute({
-        id: '1',
-        album: 'The White Album',
-      })
-    ).rejects.toThrow('Vinyl record not found');
-  });
-
-  it('should not update vinyl record fields if they are not provided', async () => {
-    const vinylRecordRepository = new MockVinylRecordRepository();
-    const registerVinylRecord = new RegisterVinylRecord(vinylRecordRepository);
-    const updateVinylRecord = new UpdateVinylRecord(vinylRecordRepository);
-
-    const record = await registerVinylRecord.execute({
-      band: 'The Beatles',
-      album: 'Abbey Road',
-      year: 1969,
-      numberOfTracks: 17,
-      photoUrl: 'https://example.com/abbey-road.jpg',
-    });
-
-    const updatedRecord = await updateVinylRecord.execute({
-      id: record.id,
-    });
-
-    expect(updatedRecord.band.value).toBe('The Beatles');
-    expect(updatedRecord.album.value).toBe('Abbey Road');
-    expect(updatedRecord.year).toBe(1969);
-    expect(updatedRecord.numberOfTracks).toBe(17);
-    expect(updatedRecord.photo.url).toBe('https://example.com/abbey-road.jpg');
-  });
-});
+})

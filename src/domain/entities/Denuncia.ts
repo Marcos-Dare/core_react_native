@@ -1,5 +1,3 @@
-// DENTRO DO ARQUIVO: Denuncia.ts
-
 import { GeoCoordinates } from "../value-objects/GeoCoordinates";
 import { Photo } from "../value-objects/Photo";
 

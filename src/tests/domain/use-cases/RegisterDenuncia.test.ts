@@ -1,24 +1,25 @@
-import { RegisterVinylRecord } from '../../../domain/use-cases/RegisterDenuncia';
-import { MockVinylRecordRepository } from '../../../infra/repositories/MockVinylRecordRepository';
+import { MockDenunciaRepository } from "../../../infra/repositories/MockDenunciaRepository";
+import { Denuncia } from "../../../domain/entities/Denuncia";
+import { RegisterDenuncia } from "../../../domain/use-cases/RegisterDenuncia";
+import { GeoCoordinates } from "../../../domain/value-objects/GeoCoordinates";
+import { Photo } from "../../../domain/value-objects/Photo";
 
-describe('RegisterVinylRecord', () => {
-  it('should register a new vinyl record', async () => {
-    const vinylRecordRepository = new MockVinylRecordRepository();
-    const registerVinylRecord = new RegisterVinylRecord(vinylRecordRepository);
+describe('Caso de Uso: RegisterDenuncia', () => {
+    it('deve registrar uma denuncia com sucesso', async ()=> {
+        const denunciaRepository = new MockDenunciaRepository()
+        const registerDenuncia = new RegisterDenuncia(denunciaRepository)
 
-    const record = await registerVinylRecord.execute({
-      band: 'The Beatles',
-      album: 'Abbey Road',
-      year: 1969,
-      numberOfTracks: 17,
-      photoUrl: 'https://example.com/abbey-road.jpg',
-    });
+        const denuncia = {
+            userId: "1",
+            foto: Photo.create("file:///home/marcos/Imagens/tela3.png"),
+            localizacao: GeoCoordinates.create(-23.5613, -46.6565),
+            descricao: "MUito lixo"
+        }
 
-    expect(record).toBeDefined();
-    expect(record.band.value).toBe('The Beatles');
-    expect(record.album.value).toBe('Abbey Road');
+        const resposta = await registerDenuncia.execute(denuncia)
+        expect(resposta).toBeInstanceOf(Denuncia)
 
-    const foundRecord = await vinylRecordRepository.findById(record.id);
-    expect(foundRecord).toBe(record);
-  });
-});
+        expect(resposta.descricao).toBe('MUito lixo')
+
+    })
+})

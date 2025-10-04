@@ -7,6 +7,6 @@ describe('Email', () => {
   });
 
   it('should throw an error for an invalid email', () => {
-    expect(() => Email.create('invalid-email')).toThrow('Invalid email');
+    expect(() => Email.create('invalid-email')).toThrow('Email inválido');
   });
 });

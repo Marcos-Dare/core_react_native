@@ -24,8 +24,7 @@ export class RegisterUser {
 
     const hashedPassword = await this.hashPassword(password);
 
-    // --- MUDANÇA AQUI ---
-    // Agora passamos um objeto para o método create
+
     const user = User.create({
       id: randomUUID(),
       name: Name.create(name),
@@ -33,7 +32,7 @@ export class RegisterUser {
       password: Password.create(hashedPassword),
       role: role,
     });
-    // --- FIM DA MUDANÇA ---
+
 
     await this.userRepository.save(user);
 
@@ -41,7 +40,7 @@ export class RegisterUser {
   }
 
   private async hashPassword(password: string): Promise<string> {
-    // Implementação temporária para o hash
+
     return `hashed_${password}`;
   }
 }

@@ -14,15 +14,13 @@ describe('Entity: User', () => {
     const name = Name.create('John Doe');
     const email = Email.create('john.doe@example.com');
     const password = Password.create(MOCK_PASSWORD_HASH);
-    const location = GeoCoordinates.create(40.7128, -74.0060);
 
     const user = User.create({
       id: '1',
       name: name,
       email: email,
       password: password,
-      role: 'cidadão', 
-      location: location,
+      role: 'cidadão'
     });
 
     expect(user.id).toBe('1');
@@ -30,7 +28,6 @@ describe('Entity: User', () => {
     expect(user.email.value).toBe('john.doe@example.com');
     expect(user.password.value).toBe(MOCK_PASSWORD_HASH);
     expect(user.role).toBe('cidadão');
-    expect(user.location).toEqual(location); 
   });
 
   it('deve atualizar o nome do usuário corretamente', () => {

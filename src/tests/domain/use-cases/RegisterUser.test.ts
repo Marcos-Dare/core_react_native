@@ -10,8 +10,7 @@ describe('RegisterUser', () => {
       name: 'John Doe',
       email: 'john.doe@example.com',
       password: 'password123',
-      latitude: 40.7128,
-      longitude: -74.0060,
+      role: "agente",
     });
 
     expect(user).toBeDefined();
@@ -30,8 +29,7 @@ describe('RegisterUser', () => {
       name: 'John Doe',
       email: 'john.doe@example.com',
       password: 'password123',
-      latitude: 40.7128,
-      longitude: -74.0060,
+      role:"agente"
     });
 
     await expect(
@@ -39,9 +37,8 @@ describe('RegisterUser', () => {
         name: 'Jane Doe',
         email: 'john.doe@example.com',
         password: 'password456',
-        latitude: 40.7129,
-        longitude: -74.0061,
+        role:"agente"
       })
-    ).rejects.toThrow('User already exists');
+    ).rejects.toThrow('Usuário já existe');
   });
 });

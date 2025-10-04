@@ -4,6 +4,7 @@ import { RegisterDenuncia } from "../../../domain/use-cases/RegisterDenuncia";
 import { Photo } from "../../../domain/value-objects/Photo";
 import { GeoCoordinates } from "../../../domain/value-objects/GeoCoordinates";
 import { Denuncia } from "../../../domain/entities/Denuncia";
+import { DenunciaFactory } from "../../../factories/DenunciaFactory";
 
 describe("testando use-case: UpdateDenuncia", ()=>{
     it("deve atualizar uma denuncia com sucesso", async ()=>{
@@ -41,5 +42,45 @@ describe("testando use-case: UpdateDenuncia", ()=>{
                 descricao: "essa é 2",
             })
         ).rejects.toThrow(new Error('Denúncia não encontrada'));
+    });
+
+    it('deve atualizar o status para "em_analise"', async () => {
+   
+        const mockRepository = new MockDenunciaRepository();
+        const updateDenunciaUseCase = new UpdateDenuncia(mockRepository);
+        const denunciaOriginal = DenunciaFactory.create({}); 
+        await mockRepository.save(denunciaOriginal);
+
+ 
+        await updateDenunciaUseCase.execute({
+        id: denunciaOriginal.id,
+        status: 'em_analise',
+        });
+
+ 
+        const denunciaDoRepositorio = await mockRepository.findById(denunciaOriginal.id);
+        expect(denunciaDoRepositorio?.status).toBe('em_analise');
+    });
+
+    it('deve atualizar apenas a localização, sem alterar outros dados', async () => {
+
+        const mockRepository = new MockDenunciaRepository();
+        const updateDenunciaUseCase = new UpdateDenuncia(mockRepository);
+        const denunciaOriginal = DenunciaFactory.create({});
+        await mockRepository.save(denunciaOriginal);
+
+        const novaLocalizacao = GeoCoordinates.create(1, 2);
+
+
+        await updateDenunciaUseCase.execute({
+        id: denunciaOriginal.id,
+        localizacao: novaLocalizacao,
+        });
+
+
+        const denunciaDoRepositorio = await mockRepository.findById(denunciaOriginal.id);
+        expect(denunciaDoRepositorio?.localizacao).toEqual(novaLocalizacao);
+
+        expect(denunciaDoRepositorio?.status).toBe('pendente'); 
     });
 })

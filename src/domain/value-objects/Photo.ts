@@ -1,7 +1,5 @@
-// DENTRO DO ARQUIVO: value-objects/Photo.ts
-
 export class Photo {
-  private constructor(readonly uri: string) {} // Renomeado para 'uri' para ser mais genérico
+  private constructor(readonly uri: string) {} 
 
   static create(source: string): Photo {
     if (!this.validate(source)) {
@@ -11,11 +9,10 @@ export class Photo {
   }
 
   private static validate(source: string): boolean {
-    // Agora, a validação aceita URLs da web OU caminhos de arquivo locais
+
     const isWebUrl = source.startsWith('http://') || source.startsWith('https://');
     const isFileUri = source.startsWith('file://');
 
-    // A fonte é válida se for um dos dois
     return isWebUrl || isFileUri;
   }
 }

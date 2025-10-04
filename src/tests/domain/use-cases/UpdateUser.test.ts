@@ -12,8 +12,7 @@ describe('UpdateUser', () => {
       name: 'John Doe',
       email: 'john.doe@example.com',
       password: 'password123',
-      latitude: 40.7128,
-      longitude: -74.0060,
+      role:"agente"
     });
 
     const updatedUser = await updateUser.execute({
@@ -33,7 +32,7 @@ describe('UpdateUser', () => {
         id: '1',
         name: 'John Doe Updated',
       })
-    ).rejects.toThrow('User not found');
+    ).rejects.toThrow('Usuário não encontrado');
   });
 
   it('should not update user fields if they are not provided', async () => {
@@ -45,8 +44,7 @@ describe('UpdateUser', () => {
       name: 'John Doe',
       email: 'john.doe@example.com',
       password: 'password123',
-      latitude: 40.7128,
-      longitude: -74.0060,
+      role:"agente"
     });
 
     const updatedUser = await updateUser.execute({
@@ -55,8 +53,6 @@ describe('UpdateUser', () => {
 
     expect(updatedUser.name.value).toBe('John Doe');
     expect(updatedUser.email.value).toBe('john.doe@example.com');
-    expect(updatedUser.location.latitude).toBe(40.7128);
-    expect(updatedUser.location.longitude).toBe(-74.0060);
   });
 
   it('should update only the email', async () => {
@@ -68,8 +64,7 @@ describe('UpdateUser', () => {
       name: 'John Doe',
       email: 'john.doe@example.com',
       password: 'password123',
-      latitude: 40.7128,
-      longitude: -74.0060,
+      role:"agente"
     });
 
     const updatedUser = await updateUser.execute({
@@ -79,8 +74,6 @@ describe('UpdateUser', () => {
 
     expect(updatedUser.name.value).toBe('John Doe');
     expect(updatedUser.email.value).toBe('updated.email@example.com');
-    expect(updatedUser.location.latitude).toBe(40.7128);
-    expect(updatedUser.location.longitude).toBe(-74.0060);
   });
 
   it('should update only the location', async () => {
@@ -92,19 +85,14 @@ describe('UpdateUser', () => {
       name: 'John Doe',
       email: 'john.doe@example.com',
       password: 'password123',
-      latitude: 40.7128,
-      longitude: -74.0060,
+      role:"agente"
     });
 
     const updatedUser = await updateUser.execute({
-      id: user.id,
-      latitude: 10,
-      longitude: 20,
+      id: user.id
     });
 
     expect(updatedUser.name.value).toBe('John Doe');
     expect(updatedUser.email.value).toBe('john.doe@example.com');
-    expect(updatedUser.location.latitude).toBe(10);
-    expect(updatedUser.location.longitude).toBe(20);
   });
 });
